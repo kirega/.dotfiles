@@ -5,7 +5,6 @@ require("motch.plugins")
 _ = require("underscore")
 
 local augroup = require("motch.utils").augroup
-local nnoremap = require("motch.utils").nnoremap
 local opt = vim.opt
 
 function RemoveNetrwMap()
@@ -75,30 +74,30 @@ vim.cmd([[command! E e]])
 vim.cmd([[command! W w]])
 vim.cmd([[command! Wq wq]])
 
-nnoremap("Y", "y$")
-nnoremap("cn", ":cnext<cr>")
-nnoremap("<leader><space>", ":set hls!<cr>")
-nnoremap("<leader>ev", ":vsplit ~/.vimrc<cr>")
-nnoremap("<leader>sv", [[:luafile $MYVIMRC<cr>]])
-nnoremap("<c-p>", ":Files<cr>")
-nnoremap("<space>vp", ":Files ~/.local/share/nvim/site/pack/packer/start<cr>")
-nnoremap("<space>df", ":lua motch.projects()<cr>")
-nnoremap("gl", ":BLines<cr>")
-nnoremap("<leader>a", ":LocalProjectSearch<cr>")
-nnoremap("<space>a", ":GlobalProjectSearch<cr>")
-nnoremap("<leader>gr", ":grep<cr>")
-nnoremap("<leader>c", ":botright copen 20<cr>")
-nnoremap("<leader>gd", ":silent !tmux popup -K -w '90\\%' -h '90\\%' -R 'git diff'<cr>")
-nnoremap("<leader>gs", ":silent !tmux popup -K -w '90\\%' -h '90\\%' -R 'git status'<cr>")
+vim.keymap.set("n", "Y", "y$", { remap = false })
+vim.keymap.set("n", "cn", ":cnext<cr>", { remap = false })
+vim.keymap.set("n", "<leader><space>", ":set hls!<cr>", { remap = false })
+vim.keymap.set("n", "<leader>ev", ":vsplit ~/.vimrc<cr>", { remap = false })
+vim.keymap.set("n", "<leader>sv", [[:luafile $MYVIMRC<cr>]], { remap = false })
+vim.keymap.set("n", "<c-p>", ":Files<cr>", { remap = false })
+vim.keymap.set("n", "<space>vp", ":Files ~/.local/share/nvim/site/pack/packer/start<cr>", { remap = false })
+vim.keymap.set("n", "<space>df", ":lua motch.projects(, {remap = false})<cr>")
+vim.keymap.set("n", "gl", ":BLines<cr>", { remap = false })
+vim.keymap.set("n", "<leader>a", ":LocalProjectSearch<cr>", { remap = false })
+vim.keymap.set("n", "<space>a", ":GlobalProjectSearch<cr>", { remap = false })
+vim.keymap.set("n", "<leader>gr", ":grep<cr>", { remap = false })
+vim.keymap.set("n", "<leader>c", ":botright copen 20<cr>", { remap = false })
+vim.keymap.set("n", "<leader>gd", ":silent !tmux popup -K -w '90\\%' -h '90\\%' -R 'git diff'<cr>", { remap = false })
+vim.keymap.set("n", "<leader>gs", ":silent !tmux popup -K -w '90\\%' -h '90\\%' -R 'git status'<cr>", { remap = false })
 
 vim.cmd([[tnoremap <esc> <C-\><C-n>]])
 
 vim.g.dispatch_handlers = { "job" }
 
 -- ctags
-nnoremap("<leader>ct", ":!ctags -R .<cr>")
--- nnoremap("<leader>t", ":Tags<cr>")
--- nnoremap("<leader>r", ":BTags")
+vim.keymap.set("n", "<leader>ct", ":!ctags -R .<cr>", { remap = false })
+-- vim.keymap.set("n", "<leader>t", ":Tags<cr>")
+-- vim.keymap.set("n", "<leader>r", ":BTags")
 
 opt.completeopt = { "menu", "menuone", "noselect" }
 
@@ -114,13 +113,15 @@ opt.grepformat = "%f:%l:%c:%m"
 
 vim.g.jsx_ext_required = 0
 
-nnoremap("<leader>gy", ":Goyo<cr>")
+vim.keymap.set("n", "<leader>gy", ":Goyo<cr>", { remap = false })
 vim.g.goyo_width = 120
 vim.g.goyo_height = 100
 
 vim.g.markdown_syntax_conceal = 0
 
 vim.g.Hexokinase_optInPatterns = { "full_hex", "triple_hex", "rgb", "rgba", "hsl", "hsla" }
+
+-- vim.diagnostic.config({ virtual_text = true, virtual_lines = false })
 
 local LSP = require("motch.lsp")
 
@@ -132,7 +133,7 @@ LSP.setup("elixirls", {
       enableTestLenses = true,
     },
   },
-  cmd = { vim.fn.stdpath("data") .. "/lsp_servers/elixir/elixir-ls/language_server.sh" },
+  cmd = { "elixir-ls" },
 })
 LSP.setup("efm", {
   filetypes = {
@@ -157,22 +158,23 @@ local zk = require("zk")
 zk.setup({
   filetypes = { "markdown", "liquid" },
   on_attach = function(client, bufnr)
-    local function buf_set_keymap(...)
-      vim.api.nvim_buf_set_keymap(bufnr, ...)
-    end
-    local opts = { noremap = true, silent = true }
+    local opts = { remap = false, silent = true }
 
     LSP.on_attach(client, bufnr)
-    buf_set_keymap("n", "<C-p>", [[:Notes<cr>]], opts)
-    buf_set_keymap("n", "<space>zt", [[:Tags<cr>]], opts)
-    buf_set_keymap("n", "<space>zl", [[:Links<cr>]], opts)
-    buf_set_keymap("n", "<space>zb", [[:Backlinks<cr>]], opts)
-    buf_set_keymap("n", "<space>zd", ":ZkDaily<cr>", opts)
-    buf_set_keymap("v", "<leader>zn", ":'<,'>lua vim.lsp.buf.range_code_action()<CR>", opts)
+    vim.keymap.set("n", "<C-p>", [[:Notes<cr>]], opts)
+    vim.keymap.set("n", "<space>zt", [[:Tags<cr>]], opts)
+    vim.keymap.set("n", "<space>zl", [[:Links<cr>]], opts)
+    vim.keymap.set("n", "<space>zb", [[:Backlinks<cr>]], opts)
+    vim.keymap.set("n", "<space>zd", ":ZkDaily<cr>", opts)
+    vim.keymap.set("v", "<leader>zn", ":'<,'>lua vim.lsp.buf.range_code_action()<CR>", opts)
 
     if vim.fn.expand("%:h") == "dnd" then
-      buf_set_keymap("n", "<A-j>", [[:lua motch.dnd.move_to("previous")<cr>]], opts)
-      buf_set_keymap("n", "<A-k>", [[:lua motch.dnd.move_to("next")<cr>]], opts)
+      vim.keymap.set("n", "<A-j>", function()
+        require("motch.dnd").move_to("previous")
+      end, opts)
+      vim.keymap.set("n", "<A-k>", function()
+        require("motch.dnd").move_to("next")
+      end, opts)
     end
   end,
 })

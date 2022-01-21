@@ -83,4 +83,4 @@ end
 
 vim.cmd([[command! InsertPreviousSessionLink lua motch.dnd.insert_link(motch.dnd.previous_session())]])
 
-_G.motch.dnd = dnd
+return dnd

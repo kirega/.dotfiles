@@ -12,6 +12,15 @@ startup({
   function(use, use_rocks)
     use({ "wbthomason/packer.nvim", opt = true })
 
+    -- use({
+    --   "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    --   config = function()
+    --     require("lsp_lines").register_lsp_virtual_lines()
+    --   end,
+    --   requires = { "folke/trouble.nvim" },
+    -- })
+
+    use("jbyuki/venn.nvim")
     use("~/Development/zk.nvim")
     use("elixir-editors/vim-elixir")
     use("ruanyl/vim-gh-line")
@@ -77,6 +86,8 @@ startup({
     use({ "rrethy/vim-hexokinase", run = "make hexokinase" })
 
     use("lukas-reineke/cmp-rg")
+
+    use("ThePrimeagen/harpoon")
 
     use_rocks({ "underscore" })
     use_rocks({ "ansicolors" })
